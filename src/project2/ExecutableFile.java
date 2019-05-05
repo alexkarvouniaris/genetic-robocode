@@ -14,7 +14,18 @@ public class ExecutableFile extends FitnessFunction{
 	}
 	//Make a configuration object passing the fitness function, to DO
 	
-	//Make a function that fills a disk file with a set of the 4 genes, to DO
+	//Create the Population of N chromosomes
+	
+	//Evolute the Population
+	
+	//check If we are on target 
+	
+	//pick the chromose with the highest fitness
+	
+	
+	//Make a function that parses the 4 genes (double values ) to the disk file
+	//Make a function fills a disk file with a set of the 4 genes, to DO
+	
 	
 	//Call robocode engine and run a specific battle
 	
