@@ -3,6 +3,12 @@ package project2;
 import org.jgap.FitnessFunction;
 import org.jgap.IChromosome;
 
+import robocode.control.BattleSpecification;
+import robocode.control.BattlefieldSpecification;
+import robocode.control.RobocodeEngine;
+import robocode.control.RobotSetup;
+import robocode.control.RobotSpecification;
+
 public class ExecutableFile extends FitnessFunction{
 	
 	//Fitness function goes here, to DO
@@ -13,13 +19,12 @@ public class ExecutableFile extends FitnessFunction{
 		return fitness;
 	}
 	//Make a configuration object passing the fitness function, to DO
-	
-<<<<<<< HEAD
+
 	//Make a function that fills a disk file with a set of the 4 genes, to DO
 	public static void main(String[] args) {
 	//This is for testing purposes
 	}
-=======
+
 	//Create the Population of N chromosomes
 	
 	//Evolute the Population
@@ -50,7 +55,7 @@ public class ExecutableFile extends FitnessFunction{
 		int sentryBorderSize = 50;
 		boolean hideEnemyNames = true;
 
-		// the obstable and the a star robot
+		
 		RobotSpecification[] Robots = engine.getLocalRepository("fnl.SuperRamFire,fnl.SuperTracker");// the two
 																										// robots
 		// that
@@ -62,10 +67,6 @@ public class ExecutableFile extends FitnessFunction{
 
 		existingRobots[0] = Robots[0];
 		robotSetups[0] = new RobotSetup(200.0, 200.0, 0.0); // set the robot
-															// every time with
-															// the given
-															// parameters
-
 		// take the robot 1 which is the robot that the second team will programm
 		existingRobots[1] = Robots[1];
 
@@ -75,15 +76,12 @@ public class ExecutableFile extends FitnessFunction{
 		BattleSpecification battleSpec = new BattleSpecification(battlefield, numberOfRounds, inactivityTime,
 				gunCoolingRate, sentryBorderSize, hideEnemyNames, existingRobots, robotSetups);
 		
-			// start the battle
-			engine.runBattle(battleSpec, true); // waits till the battle finishes
+		// start the battle
+		engine.runBattle(battleSpec, true); // waits till the battle finishes
 		
 
 		// Cleanup our RobocodeEngine
 		engine.close();
 
 	}
-	
-
->>>>>>> 4f30cec0869b4a1b3e8bea321d7e4dd853e5c69b
 }
