@@ -34,6 +34,55 @@ public class ExecutableFile extends FitnessFunction{
 	
 	
 	//Call robocode engine and run a specific battle
+	public static void Battle() {
+
+		// setting the battle specification
+		RobocodeEngine engine = new RobocodeEngine(new java.io.File("C:/robocode"));
+		engine.setVisible(true);
+
+		int RowsLength = 800;
+		int ColLength = 600;
+		int VerticalOffset = ColLength % 64;// because the size of each position is 64
+		BattlefieldSpecification battlefield = new BattlefieldSpecification(RowsLength, ColLength);
+		int numberOfRounds = 1;
+		long inactivityTime = 10000000;
+		double gunCoolingRate = 1.0;
+		int sentryBorderSize = 50;
+		boolean hideEnemyNames = true;
+
+		// the obstable and the a star robot
+		RobotSpecification[] Robots = engine.getLocalRepository("fnl.SuperRamFire,fnl.SuperTracker");// the two
+																										// robots
+		// that
+		// we will use
+
+		RobotSpecification[] existingRobots = new RobotSpecification[2];
+
+		RobotSetup[] robotSetups = new RobotSetup[2]; // initialazing the robots
+
+		existingRobots[0] = Robots[0];
+		robotSetups[0] = new RobotSetup(200.0, 200.0, 0.0); // set the robot
+															// every time with
+															// the given
+															// parameters
+
+		// take the robot 1 which is the robot that the second team will programm
+		existingRobots[1] = Robots[1];
+
+		robotSetups[1] = new RobotSetup(500.0, 500.0, 250.0);
+
+		// Create the battle with the specifications
+		BattleSpecification battleSpec = new BattleSpecification(battlefield, numberOfRounds, inactivityTime,
+				gunCoolingRate, sentryBorderSize, hideEnemyNames, existingRobots, robotSetups);
+		
+			// start the battle
+			engine.runBattle(battleSpec, true); // waits till the battle finishes
+		
+
+		// Cleanup our RobocodeEngine
+		engine.close();
+
+	}
 	
 
 >>>>>>> 4f30cec0869b4a1b3e8bea321d7e4dd853e5c69b
