@@ -15,8 +15,7 @@ public class ExecutableFile extends FitnessFunction{
 	//Make a configuration object passing the fitness function, to DO
 	
 	//Make a function that fills a disk file with a set of the 4 genes, to DO
-	
-	//Call robocode engine and run a specific battle
-	
-
+	public static void main(String[] args) {
+	//This is for testing purposes
+	}
 }
