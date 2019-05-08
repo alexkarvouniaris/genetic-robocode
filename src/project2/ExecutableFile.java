@@ -14,12 +14,12 @@ public class ExecutableFile extends FitnessFunction{
 	}
 	//Make a configuration object passing the fitness function, to DO
 	
-<<<<<<< HEAD
+
 	//Make a function that fills a disk file with a set of the 4 genes, to DO
 	public static void main(String[] args) {
 	//This is for testing purposes
 	}
-=======
+
 	//Create the Population of N chromosomes
 	
 	//Evolute the Population
@@ -36,5 +36,5 @@ public class ExecutableFile extends FitnessFunction{
 	//Call robocode engine and run a specific battle
 	
 
->>>>>>> 4f30cec0869b4a1b3e8bea321d7e4dd853e5c69b
+
 }
