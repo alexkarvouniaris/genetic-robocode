@@ -30,10 +30,6 @@ public class BattleObserver implements IBattleListener {
 
 	@Override
 	public void onBattleCompleted(BattleCompletedEvent event) {
-		// TODO Auto-generated method stub
-		//System.out.println("-- Battle has completed --");
-		// Print out the sorted results with the robot names
-		//System.out.println("Battle results:");
 		for (robocode.BattleResults result : event.getSortedResults()) {
 			String name = result.getTeamLeaderName();
 			if (name.equals("project2.SuperTrackerVol2*")) {
@@ -45,61 +41,61 @@ public class BattleObserver implements IBattleListener {
 	@Override
 	public void onBattleError(BattleErrorEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onBattleFinished(BattleFinishedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onBattleMessage(BattleMessageEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onBattlePaused(BattlePausedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onBattleResumed(BattleResumedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onBattleStarted(BattleStartedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onRoundEnded(RoundEndedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onRoundStarted(RoundStartedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onTurnEnded(TurnEndedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onTurnStarted(TurnStartedEvent event) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 }

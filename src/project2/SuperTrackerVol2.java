@@ -3,6 +3,8 @@ package project2;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,24 +20,18 @@ import robocode.WinEvent;
 public class SuperTrackerVol2 extends AdvancedRobot {
 
 	int moveDirection = 1;// which way to move
-
 	double DistanceLimConsEnemyClose;// Distance limit to consider enemy is close
-
 	double ProbabToChangeSpeed;// probability to change speed
-
 	double RangeOfPossibRobotSpeeds; // Range of possible speeds
-
 	double MinimumRobotSpeed;// minimum speed of the robot
-	
-	Random randomGenerator;// All the random numbers should be the same each time for deterministic reasons;
-	 
+	Random randomGenerator;// All the random numbers should be the same each time for deterministic
+							// reasons;
 
 	public void run() {
 		randomGenerator = new Random(0);
 		try {
 			readVars();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setAdjustRadarForRobotTurn(true);// keep the radar still while we turn
@@ -47,49 +43,24 @@ public class SuperTrackerVol2 extends AdvancedRobot {
 		setAdjustGunForRobotTurn(true); // Keep the gun still when we turn
 		turnRadarRightRadians(Double.POSITIVE_INFINITY);// keep turning radar right
 	}
-	
+
 	public void onScannedRobot(ScannedRobotEvent e) {
 		double absBearing = e.getBearingRadians() + getHeadingRadians();// enemies absolute bearing
 		double latVel = e.getVelocity() * Math.sin(e.getHeadingRadians() - absBearing);// enemies later velocity
 		double gunTurnAmt;// amount to turn our gun
 		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the radar
 		if (randomGenerator.nextDouble() > ProbabToChangeSpeed) {
-			setMaxVelocity((RangeOfPossibRobotSpeeds * randomGenerator.nextDouble()) + MinimumRobotSpeed);// randomly change speed
+			setMaxVelocity((RangeOfPossibRobotSpeeds * randomGenerator.nextDouble()) + MinimumRobotSpeed);
 		}
 		if (e.getDistance() > DistanceLimConsEnemyClose) {// if distance is greater than DistanceLimConsEnemyClose
-			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 22);// amount
-																													// to
-																													// turn
-																													// our
-																													// gun,
-																													// lead
-																													// just
-																													// a
-																													// little
-																													// bit
+			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 22);
 			setTurnGunRightRadians(gunTurnAmt); // turn our gun
 			setTurnRightRadians(
-					robocode.util.Utils.normalRelativeAngle(absBearing - getHeadingRadians() + latVel / getVelocity()));// drive
-																														// towards
-																														// towards
-																														// enemies
-																														// predicted
-																														// future
-																														// location
+					robocode.util.Utils.normalRelativeAngle(absBearing - getHeadingRadians() + latVel / getVelocity()));
 			setAhead((e.getDistance() - 140) * moveDirection);// move forward
 			setFire(3);// fire
 		} else {// if we are close enough...
-			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 15);// amount
-																													// to
-																													// turn
-																													// our
-																													// gun
-																													// ,
-																													// lead
-																													// just
-																													// a
-																													// little
-																													// bit
+			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 15);
 			setTurnGunRightRadians(gunTurnAmt);// turn our gun
 			setTurnLeft(-90 - e.getBearing()); // turn perpendicular to the enemy
 			setAhead((e.getDistance() - 140) * moveDirection);// move forward
@@ -98,25 +69,22 @@ public class SuperTrackerVol2 extends AdvancedRobot {
 	}
 
 	public void onHitWall(HitWallEvent e) {
-		moveDirection = -moveDirection;// reverse direction upon hitting a wall
+		moveDirection = -moveDirection;//reverse direction upon hitting a wall
 	}
 
-	/**
-	 * onWin: Do a victory dance
+	/*
+	 * public void onWin(WinEvent e) { for (int i = 0; i < 50; i++) { turnRight(30);
+	 * turnLeft(30); } }
 	 */
-	public void onWin(WinEvent e) {
-		for (int i = 0; i < 50; i++) {
-			turnRight(30);
-			turnLeft(30);
-		}
-	}
 
 	public void readVars() throws FileNotFoundException {
-		//put Disk file path
-		String fileName = "C:/Users/alex/genetic-robocode/src/project2/Disk File";
+
+		// gets the current user path
+		Path currentRelativePath = Paths.get("");
+		String currentPath = currentRelativePath.toAbsolutePath().toString();
 
 		try {
-			File file = new File(fileName);
+			File file = new File(currentPath + "/src/project2/DiskFile.txt");
 			Scanner sc = new Scanner(file);
 			sc.useDelimiter(" ");
 
@@ -149,7 +117,6 @@ public class SuperTrackerVol2 extends AdvancedRobot {
 			System.out.println("file");
 		}
 		// catch exception
-
 	}
 
 	public void setDistanceLimConsEnemyClose(double distanceLimConsEnemyClose) {

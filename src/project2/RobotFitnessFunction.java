@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.jgap.FitnessFunction;
 import org.jgap.Gene;
@@ -15,38 +17,48 @@ import robocode.control.RobocodeEngine;
 import robocode.control.RobotSetup;
 import robocode.control.RobotSpecification;
 
-public class RobotFitnessFunction extends FitnessFunction{
-	public RobotFitnessFunction() {
-		
-	}
-	
-	public void overwrite(IChromosome chr) throws FileNotFoundException {
+public class RobotFitnessFunction extends FitnessFunction {
+
+	public static void overwrite(IChromosome chr) throws FileNotFoundException {
+
+		//Get the Gene Values
 		Gene a = chr.getGene(0);
 		Gene b = chr.getGene(1);
 		Gene c = chr.getGene(2);
 		Gene d = chr.getGene(3);
-		
-		a.toString();
-		b.toString();
-		c.toString();
-		d.toString();
-			
-		StringBuffer sb = new StringBuffer();
-		sb.append(a + " " + b + " " + c + " " + d);
 
-		File file = new File("C:/Users/alex/genetic-robocode/src/project2/Disk File");
+		//Print the double values to the DiskFile.txt
+		StringBuffer sb = new StringBuffer();
+		sb.append(a.toString().replace("DoubleGene(10.0,999.0)=", "") + " "
+				+ b.toString().replace("DoubleGene(0.1,0.9)=", "") + " "
+				+ c.toString().replace("DoubleGene(0.1,9.0)=", "") + " "
+				+ d.toString().replace("DoubleGene(0.1,9.0)=", ""));
+
+		//Gets the current user path
+		Path currentRelativePath = Paths.get("");
+		String currentPath = currentRelativePath.toAbsolutePath().toString();
+
+		File file = new File(currentPath + "/src/project2/DiskFile.txt");
+
 		PrintWriter pw = new PrintWriter(file);
 		file.getParentFile().mkdirs();
 		pw.println(sb);
 		pw.close();
 	}
-	
-	// Fitness function goes here, to DO
-	public static double battle() {
 
-		// setting the battle specification
+	public static double battle(int fin) {
+
+		//Setting the battle specification
+		
+		//The default robocode path
 		RobocodeEngine engine = new RobocodeEngine(new java.io.File("C:/robocode"));
-		engine.setVisible(false);
+		
+		//If fin = 1 , it is the final batlle
+		if (fin == 0) {
+			engine.setVisible(false);
+		} else if (fin == 1) {
+			engine.setVisible(true);
+		}
 
 		int RowsLength = 800;
 		int ColLength = 600;
@@ -61,11 +73,10 @@ public class RobotFitnessFunction extends FitnessFunction{
 		// the two robot
 		RobotSpecification[] Robots = engine.getLocalRepository("project2.SuperRamFire,project2.SuperTrackerVol2");
 		RobotSpecification[] existingRobots = new RobotSpecification[2];
-		RobotSetup[] robotSetups = new RobotSetup[2]; // initialazing the robots
+		RobotSetup[] robotSetups = new RobotSetup[2]; // Initializing the robots
 		existingRobots[0] = Robots[0];
-		robotSetups[0] = new RobotSetup(200.0, 200.0, 0.0); // set the robot every time with the given parameters
+		robotSetups[0] = new RobotSetup(200.0, 200.0, 0.0);
 
-		// take the robot 1 which is the robot that the second team will program
 		existingRobots[1] = Robots[1];
 
 		robotSetups[1] = new RobotSetup(500.0, 500.0, 250.0);
@@ -82,22 +93,18 @@ public class RobotFitnessFunction extends FitnessFunction{
 		engine.runBattle(battleSpec, true); // waits till the battle finishes
 
 		System.out.println("Score is : " + b.getScore());
-		// Cleanup our RobocodeEngine
-		// engine.close();
+		
 		return b.getScore();
-
 	}
 
 	@Override
 	protected double evaluate(IChromosome arg0) {
-		// TODO Auto-generated method stub
 		try {
 			overwrite(arg0);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		double fitness = battle();// here goes the variable that fixes fitness value
+		double fitness = battle(0);// here goes the variable that fixes fitness value
 		System.out.println("Fitness is : " + fitness);
 		return fitness;
 	}
