@@ -19,7 +19,8 @@ First, download the project and open it in the IDE of your choice. Then go to ed
 Manually open Robocode.exe. Click Options --> Preferencies --> Developement Options. Then, add this project's path and click Finish. Now you have the two robots that we used for this specific example. 
 
 ## Run
-Before running the ExecutableFile.java, edit the configurations, click in the Arguments tab, fill the VM Arguments tab with this statement: **-DNOSECURITY=true**, and then set the Working Directory with: **C:\robocode**.
+Before running the ExecutableFile.java, edit the configurations, click in the Arguments tab, fill the VM Arguments tab with this statement: **-DNOSECURITY=true**, and then set the Working Directory with: **C:\robocode**. 
+You are now ready to run the project. This will lead to the Robocode program to open also and you can witness the final battle.
 
 ## Authors
 
