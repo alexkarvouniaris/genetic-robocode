@@ -1,7 +1,20 @@
 package project2;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import org.jgap.Chromosome;
+import org.jgap.Configuration;
 import org.jgap.FitnessFunction;
+import org.jgap.Gene;
+import org.jgap.Genotype;
 import org.jgap.IChromosome;
+import org.jgap.InvalidConfigurationException;
+import org.jgap.impl.DefaultConfiguration;
+import org.jgap.impl.DoubleGene;
 
 import robocode.control.BattleSpecification;
 import robocode.control.BattlefieldSpecification;
@@ -10,86 +23,39 @@ import robocode.control.RobotSetup;
 import robocode.control.RobotSpecification;
 import project2.BattleObserver;
 
-public class ExecutableFile extends FitnessFunction {
+public class ExecutableFile {
 
-	// Fitness function goes here, to DO
-	@Override
-	protected double evaluate(IChromosome arg0) {
-		// TODO Auto-generated method stub
-		double fitness = 0;// here goes the variable that fixes fitness value
-		return fitness;
-	}
+	public static void main(String[] args) throws InvalidConfigurationException {
 	// Make a configuration object passing the fitness function, to DO
-
-	// Make a function that fills a disk file with a set of the 4 genes, to DO
-
-	// This is for testing purposes
-
+	Configuration conf = new DefaultConfiguration();
+	FitnessFunction myFunc = new RobotFitnessFunction();
+	
+	conf.setFitnessFunction( myFunc );
 	// Create the Population of N chromosomes
+	Gene[] sampleGenes = new Gene[4];
+	sampleGenes[0] = new DoubleGene(conf, 10.0, 999.0);
+	sampleGenes[1] = new DoubleGene(conf, 0.1, 0.9);
+	sampleGenes[2] = new DoubleGene(conf, 0.1, 9.0);
+	sampleGenes[3] = new DoubleGene(conf, 0.1, 9.0);
+	
+	
+	Chromosome sampleChromosome = new Chromosome(conf, sampleGenes);
+	
+	conf.setSampleChromosome( sampleChromosome );
+	
+	conf.setPopulationSize( 5 );
 
 	// Evolute the Population
-
+	Genotype population = Genotype.randomInitialGenotype( conf );
 	// check If we are on target
-
+	population.evolve();
 	// pick the chromose with the highest fitness
-
-	// Make a function that parses the 4 genes (double values ) to the disk file
-	// Make a function fills a disk file with a set of the 4 genes, to DO
+	IChromosome bestSolutionSoFar = population.getFittestChromosome();
+	System.out.println("Winning Chromosome: " + bestSolutionSoFar);	
 
 	// Call robocode engine and run a specific battle
 
-	public static void main(String[] args) {
-		for (int i = 0; i < 20; i++) {
-			//System.out.println(i);
-			//System.out.println("Programm running for the " + i + " time!!");
-			battle();
-		}
-		// Make sure that the Java VM is shut down properly
-		System.exit(0);
-	}
-
-	public static void battle() {
-
-		// setting the battle specification
-		RobocodeEngine engine = new RobocodeEngine(new java.io.File("C:/robocode"));
-		engine.setVisible(false);
-
-		int RowsLength = 800;
-		int ColLength = 600;
-		int VerticalOffset = ColLength % 64;// because the size of each position is 64
-		BattlefieldSpecification battlefield = new BattlefieldSpecification(RowsLength, ColLength);
-		int numberOfRounds = 5;
-		long inactivityTime = 10000000;
-		double gunCoolingRate = 1.0;
-		int sentryBorderSize = 50;
-		boolean hideEnemyNames = true;
-
-		// the two robot
-		RobotSpecification[] Robots = engine.getLocalRepository("project2.SuperRamFire,project2.SuperTrackerVol2");
-		RobotSpecification[] existingRobots = new RobotSpecification[2];
-		RobotSetup[] robotSetups = new RobotSetup[2]; // initialazing the robots
-		existingRobots[0] = Robots[0];
-		robotSetups[0] = new RobotSetup(200.0, 200.0, 0.0); // set the robot every time with the given parameters
-
-		// take the robot 1 which is the robot that the second team will program
-		existingRobots[1] = Robots[1];
-
-		robotSetups[1] = new RobotSetup(500.0, 500.0, 250.0);
-
-		// Create the battle with the specifications
-		BattleSpecification battleSpec = new BattleSpecification(battlefield, numberOfRounds, inactivityTime,
-				gunCoolingRate, sentryBorderSize, hideEnemyNames, existingRobots, robotSetups);
-
-		// add our own battlelistener
-		BattleObserver b = new BattleObserver();
-		engine.addBattleListener(b);
-
-		// start the battle
-		engine.runBattle(battleSpec, true); // waits till the battle finishes
-
-		System.out.println("Score is : " + b.getScore());
-		// Cleanup our RobocodeEngine
-		// engine.close();
-
 	}
 }
+	
+

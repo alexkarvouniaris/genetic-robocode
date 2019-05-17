@@ -2,7 +2,8 @@ package project2;
  
 import java.awt.Color;
 import java.awt.geom.Point2D;
- 
+import java.util.Random;
+
 import robocode.*;
 import robocode.util.Utils;
 /**
@@ -23,8 +24,12 @@ public class SuperRamFire extends AdvancedRobot {
 	static double dir=1;
 	static double oldEnemyHeading;
 	static double enemyEnergy;
+	
+	Random randomGenerator;// All the random numbers should be the same each time for deterministic reasons;
  
 	public void run(){
+		randomGenerator = new Random(0);
+
 		//RamFire Colors
 		setBodyColor(Color.lightGray);
 		setGunColor(Color.gray);
@@ -52,7 +57,7 @@ public class SuperRamFire extends AdvancedRobot {
  
 			//We use 300/e.getDistance() to decide if we want to change directions.
 			//This means that we will be less likely to reverse right as we are about to ram the enemy robot.
-			if(Math.random()>200/e.getDistance()){
+			if(randomGenerator.nextDouble()>200/e.getDistance()){
 				dir=-dir;
 			}
 		}

@@ -3,6 +3,7 @@ package project2;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 import project2.PhysicsRobocodeException;
@@ -25,8 +26,12 @@ public class SuperTrackerVol2 extends AdvancedRobot {
 	double RangeOfPossibRobotSpeeds; // Range of possible speeds
 
 	double MinimumRobotSpeed;// minimum speed of the robot
+	
+	Random randomGenerator;// All the random numbers should be the same each time for deterministic reasons;
+	 
 
 	public void run() {
+		randomGenerator = new Random(0);
 		try {
 			readVars();
 		} catch (FileNotFoundException e) {
@@ -42,14 +47,14 @@ public class SuperTrackerVol2 extends AdvancedRobot {
 		setAdjustGunForRobotTurn(true); // Keep the gun still when we turn
 		turnRadarRightRadians(Double.POSITIVE_INFINITY);// keep turning radar right
 	}
-
+	
 	public void onScannedRobot(ScannedRobotEvent e) {
 		double absBearing = e.getBearingRadians() + getHeadingRadians();// enemies absolute bearing
 		double latVel = e.getVelocity() * Math.sin(e.getHeadingRadians() - absBearing);// enemies later velocity
 		double gunTurnAmt;// amount to turn our gun
 		setTurnRadarLeftRadians(getRadarTurnRemainingRadians());// lock on the radar
-		if (Math.random() > ProbabToChangeSpeed) {
-			setMaxVelocity((RangeOfPossibRobotSpeeds * Math.random()) + MinimumRobotSpeed);// randomly change speed
+		if (randomGenerator.nextDouble() > ProbabToChangeSpeed) {
+			setMaxVelocity((RangeOfPossibRobotSpeeds * randomGenerator.nextDouble()) + MinimumRobotSpeed);// randomly change speed
 		}
 		if (e.getDistance() > DistanceLimConsEnemyClose) {// if distance is greater than DistanceLimConsEnemyClose
 			gunTurnAmt = robocode.util.Utils.normalRelativeAngle(absBearing - getGunHeadingRadians() + latVel / 22);// amount
@@ -108,7 +113,7 @@ public class SuperTrackerVol2 extends AdvancedRobot {
 
 	public void readVars() throws FileNotFoundException {
 		//put Disk file path
-		String fileName = "C:/Users/Nick/another-eclipse-workspace/GeneticAlgorithms/src/supersample/DiskFile.txt";
+		String fileName = "C:/Users/alex/genetic-robocode/src/project2/Disk File";
 
 		try {
 			File file = new File(fileName);
