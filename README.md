@@ -6,12 +6,9 @@ This project is about implementing the genetic algorithm to any robot(in this ca
 
 To make this run, first you have to download:
 
-```
 [Robocode](https://robocode.sourceforge.io/)
-```
-```
+
 [JGAP Library](https://sourceforge.net/projects/jgap/)
-```
 
 ## Getting Started
 
@@ -29,5 +26,9 @@ Before running the ExecutableFile.java, edit the configurations, click in the Ar
 * **Alexandros Karvouniaris**-[isolatedPawn](https://github.com/isolatedPawn)
 * **Nikolaos Ntantis**-[nickdndndn](https://github.com/nickdndndn)
 
+## Acknowledgments
 
+We tweaked these sample codes for our Robots:
+* [SuperTracker](http://robowiki.net/wiki/SuperTracker)
+* [SuperRamFire](http://robowiki.net/wiki/SuperRamFire)
 
